@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      document.addEventListener("DOMContentLoaded", function (event) {
+        var articulos = [
+          {
+            articulo: {
+              name: "SAMSUNG",
+              cbarras: "12345",
+              discount: {
+                value: 10,
+                type: "percent",
+              },
+            },
+            costo: 3000,
+          },
+          {
+            articulo: {
+              name: "LG",
+              cbarras: "5435345",
+              discount: {
+                value: 5000,
+                type: "coin",
+              },
+            },
+            costo: 45645,
+          },
+          {
+            articulo: {
+              name: "HUAWEI",
+              cbarras: "645645",
+              discount: null,
+            },
+            costo: 767676,
+          },
+        ];
+        const listado = document.querySelector(".listado");
+        let contentTable = `
+        <tr>
+            <th>No.</th>
+            <th>Nombre</th>
+            <th>Costo</th>
+            <th>Descuento</th>
+        </tr>
+        `;
+        for (let i = 0; i < articulos.length; i++) {
+          // Template literal
+          const isRed = i % 2;
+          const htmlContent = `
+            <tr style="${
+              isRed ? "background-color: red" : "background-color: green"
+            }">
+                <td>${i + 1}</td>
+                <td>${articulos[i]?.articulo.name}</td>
+                <td>${articulos[i].costo}</td>
+                <td>${getDiscount(articulos[i].articulo)}</td>
+            </tr>
+            `;
+
+          contentTable += htmlContent;
+        }
+        listado.innerHTML = contentTable;
+      });
+
+      function getDiscount(article) {
+        if (article?.discount?.type === 'percent') {
+            return '-' + article.discount.value + '%'
+        }
+
+        if (article?.discount?.type === 'coin') {
+            return '-$' + article.discount.value
+        }
+
+        return 'N/A';
+      }
+    </script>
+  </head>
+  <body>
+    <table class="listado"></table>
+  </body>
+</html>
+<style>
+  .listado {
+    width: 100%;
+  }
+
+  .listado tr th {
+    background-color: orange;
+    color: white;
+    font-weight: bold;
+    font-size: 25px;
+  }
+
+  .listado tr td {
+    color: black;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+  }
+</style>
